@@ -56,5 +56,9 @@ class Article extends ActiveRecord
         return $this->hasOne(User::class, ['id' => 'user_id']);
     }
 
+    public function getComments()
+{
+    return $this->hasMany(Comment::class, ['article_id' => 'id'])->orderBy(['created_at' => SORT_DESC]);
+}
     
 }

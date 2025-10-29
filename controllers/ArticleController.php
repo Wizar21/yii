@@ -17,11 +17,13 @@ class ArticleController extends Controller
     public function actionIndex($id)
     {
         $article = $this->findModel($id); 
+        $comment = new \app\models\Comment();
 
         $this->layout = 'story';
         return $this->render('index', [
             'article' => $article,
             'author' => $article->author,
+            'comment' => $comment,
         ]);
     }
 
@@ -75,15 +77,11 @@ class ArticleController extends Controller
 public function actionUpdate($id)
 {
     $article = $this->findModel($id);
-
     if ($article->user_id !== Yii::$app->user->id) {
         throw new NotFoundHttpException('Статья не найдена.');
     }
-
     $oldImage = $article->img; 
-
     if ($article->load(Yii::$app->request->post())) {
-        
         $imageFile = \yii\web\UploadedFile::getInstance($article, 'img');
 
         if ($imageFile) {
@@ -109,7 +107,7 @@ public function actionUpdate($id)
             }
 
             Yii::$app->session->setFlash('success', 'Статья успешно обновлена');
-            return $this->redirect(['index', 'id' => $id]); // Изменено здесь
+            return $this->redirect(['index', 'id' => $id]);
         }
     }
 

@@ -102,8 +102,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                     </div>
                 </div>
+                <br><br>
             <?php endforeach; ?>
         </div>
+        
     <?php endif; ?>
 </div>
 
